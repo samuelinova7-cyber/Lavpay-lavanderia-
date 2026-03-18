@@ -1,0 +1,901 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { 
+  Menu, 
+  X, 
+  Instagram as InstagramIcon, 
+  Facebook, 
+  Phone, 
+  MapPin, 
+  Clock as ClockIcon, 
+  ChevronRight, 
+  ChevronDown, 
+  Star,
+  MessageCircle,
+  Play,
+  CheckCircle2,
+  PartyPopper,
+  Droplets,
+  Wind,
+  Medal,
+  Gem,
+  HelpCircle,
+  Heart,
+  Sparkles,
+  Shirt,
+  Zap,
+  Volume2,
+  VolumeX,
+  Wifi
+} from 'lucide-react';
+import { motion } from 'motion/react';
+import { 
+  NAV_ITEMS, 
+  DIFFERENTIALS, 
+  TESTIMONIALS, 
+  FAQ_ITEMS, 
+  STRUCTURE_IMAGES,
+  INSTAGRAM_POSTS,
+  WHATSAPP_LINK,
+  GOOGLE_REVIEWS_LINK,
+  INSTAGRAM_LINK,
+  HISTORY_STUDY_LINK,
+  BRAND_NAME,
+  SLOGAN,
+  LOGO_VIDEO,
+  HERO_VIDEO,
+  HOW_IT_WORKS_STEPS,
+  GOOGLE_MAPS_EMBED
+} from './constants';
+
+// --- Utility Components ---
+
+const Button = ({ 
+  children, 
+  variant = 'primary', 
+  className = '', 
+  onClick,
+  href 
+}: { 
+  children?: React.ReactNode; 
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'accent' | 'success' | 'navy'; 
+  className?: string;
+  onClick?: () => void;
+  href?: string;
+}) => {
+  const base = "px-6 py-3 rounded-lg font-bold transition-all duration-300 flex items-center justify-center gap-2 text-sm uppercase tracking-wider";
+  const variants = {
+    primary: "bg-blue-500 text-white hover:bg-blue-600 shadow-md",
+    secondary: "bg-slate-100 text-slate-800 hover:bg-slate-200",
+    outline: "border-2 border-blue-500 text-blue-500 hover:bg-blue-50",
+    ghost: "text-slate-600 hover:text-blue-500 hover:bg-blue-50",
+    accent: "bg-yellow-500 text-slate-900 hover:bg-yellow-600 shadow-md",
+    success: "bg-[#22c55e] text-white hover:bg-[#1eb054] shadow-md",
+    navy: "bg-[#2d3a82] text-white hover:bg-[#232d66] shadow-md"
+  };
+
+  const Component = href ? 'a' : 'button';
+
+  return (
+    <Component 
+      href={href}
+      onClick={onClick} 
+      className={`${base} ${variants[variant]} ${className}`}
+    >
+      {children}
+    </Component>
+  );
+};
+
+const VideoPlayer = ({ src, className = "", overlayClassName = "", autoPlay = true, loop = true, playsInline = true }: { src: string, className?: string, overlayClassName?: string, autoPlay?: boolean, loop?: boolean, playsInline?: boolean }) => {
+  const [isMuted, setIsMuted] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const toggleMute = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
+
+  return (
+    <div className="relative w-full h-full">
+      <video
+        ref={videoRef}
+        src={src}
+        autoPlay={autoPlay}
+        muted={isMuted}
+        loop={loop}
+        playsInline={playsInline}
+        className={className}
+      />
+      <button
+        onClick={toggleMute}
+        className={`absolute bottom-4 right-4 z-30 p-3 bg-black/50 hover:bg-black/70 text-white rounded-full backdrop-blur-sm transition-all shadow-lg ${overlayClassName}`}
+        aria-label={isMuted ? "Ativar som" : "Desativar som"}
+      >
+        {isMuted ? <VolumeX size={24} /> : <Volume2 size={24} />}
+      </button>
+    </div>
+  );
+};
+
+// --- Section Components ---
+
+const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md' : 'bg-white/80 backdrop-blur-md'}`}>
+      {/* Marquee Top Bar */}
+      <div className="bg-[#002366] text-white text-sm py-2 overflow-hidden flex items-center">
+        <div className="animate-infinite-scroll flex whitespace-nowrap items-center">
+          {[...Array(2)].map((_, copyIdx) => (
+            <div key={copyIdx} className="flex items-center gap-8 px-4">
+              {[...Array(4)].map((_, i) => (
+                <React.Fragment key={i}>
+                  <span className="flex items-center gap-2"><ClockIcon size={14} /> Aberto das 06h às 23h</span>
+                  <span className="flex items-center gap-2"><MapPin size={14} /> Porto Velho - RO</span>
+                  <span className="flex items-center gap-2"><Wind size={14} /> Lave e Seque em 1h</span>
+                  <span className="flex items-center gap-2"><Wifi size={14} /> Wi-Fi Grátis</span>
+                  <span className="flex items-center gap-2"><Droplets size={14} /> Ambiente Climatizado</span>
+                </React.Fragment>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className={`container mx-auto px-4 flex items-center justify-between transition-all duration-300 ${scrolled ? 'py-3' : 'py-5'}`}>
+        <a href="#home" className="flex items-center gap-3">
+          <video 
+            src={LOGO_VIDEO} 
+            autoPlay 
+            muted 
+            loop 
+            playsInline 
+            className="w-12 h-12 rounded-full object-cover shadow-sm"
+          />
+          <span className="text-3xl font-bold text-[#002366]">{BRAND_NAME}</span>
+        </a>
+
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex items-center gap-8">
+          {NAV_ITEMS.map((item) => (
+            <a 
+              key={item.href} 
+              href={item.href} 
+              className="font-medium text-slate-700 transition-colors hover:text-[#32CD32]"
+            >
+              {item.label}
+            </a>
+          ))}
+          <Button variant="navy" href={WHATSAPP_LINK} className="rounded-full bg-[#002366]">
+            <MessageCircle size={18} /> WhatsApp
+          </Button>
+        </nav>
+
+        {/* Mobile Menu Toggle */}
+        <button 
+          className="md:hidden p-2 rounded-lg text-slate-800"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {isOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      {isOpen && (
+        <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-xl border-t border-slate-100 p-6 flex flex-col gap-4">
+          {NAV_ITEMS.map((item) => (
+            <a 
+              key={item.href} 
+              href={item.href} 
+              className="text-lg font-medium text-slate-700 border-b border-slate-50 pb-2"
+              onClick={() => setIsOpen(false)}
+            >
+              {item.label}
+            </a>
+          ))}
+          <Button variant="navy" className="w-full rounded-full bg-[#002366]" href={WHATSAPP_LINK}>
+            Fale Conosco
+          </Button>
+        </div>
+      )}
+    </header>
+  );
+};
+
+const Hero = () => {
+  return (
+    <section id="home" className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-white">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Left Text Content */}
+          <div className="max-w-xl z-20">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-[#002366] text-sm font-bold mb-6 uppercase tracking-wider">
+              <span className="w-2 h-2 rounded-full bg-[#32CD32]"></span>
+              Tecnologia e Praticidade
+            </div>
+            
+            <h1 className="text-5xl lg:text-7xl font-extrabold text-slate-900 leading-[1.1] mb-6 tracking-tight">
+              {BRAND_NAME}: <span className="text-[#002366]">Sua vida mais leve,</span> <span className="text-[#32CD32]">suas roupas prontas num Pix.</span>
+            </h1>
+            
+            <p className="text-lg text-slate-600 mb-8 leading-relaxed">
+              A lavanderia de autoatendimento que facilita sua rotina em Porto Velho. Lave e seque suas roupas com produtos profissionais inclusos e pague com facilidade.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button variant="navy" className="text-lg px-8 py-4 rounded-xl shadow-lg bg-[#002366]" href={WHATSAPP_LINK}>
+                Falar no WhatsApp <ChevronRight size={20} />
+              </Button>
+              <Button variant="outline" className="text-lg px-8 py-4 rounded-xl border-[#32CD32] text-[#32CD32] hover:bg-green-50" href="#contact">
+                Como Chegar
+              </Button>
+            </div>
+          </div>
+
+          {/* Right Media Content */}
+          <div className="relative z-20">
+            <div className="relative rounded-[2rem] overflow-hidden shadow-2xl aspect-square md:aspect-[4/3] lg:aspect-square bg-slate-100 border-8 border-white">
+              <VideoPlayer
+                src={HERO_VIDEO}
+                className="absolute inset-0 w-full h-full object-cover"
+                overlayClassName="bottom-32 right-6"
+              />
+              
+              {/* Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#002366]/40 via-transparent to-transparent"></div>
+              
+              {/* Floating Card */}
+              <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-sm p-4 rounded-2xl shadow-xl flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-[#32CD32] flex items-center justify-center text-white font-bold text-xl shrink-0">
+                  LP
+                </div>
+                <div>
+                  <h3 className="font-bold text-slate-900">{BRAND_NAME}</h3>
+                  <p className="text-sm text-slate-600">Sua roupa limpa em 1 hora</p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Decorative Elements */}
+            <div className="absolute -top-10 -right-10 w-40 h-40 bg-blue-400/10 rounded-full blur-3xl -z-10"></div>
+            <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-green-400/10 rounded-full blur-3xl -z-10"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const HowItWorks = () => {
+  return (
+    <section id="how-it-works" className="py-24 bg-[#f8fafc]">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-16">
+          <h3 className="text-[#32CD32] font-bold text-2xl mb-2">Simples e Rápido</h3>
+          <h2 className="text-4xl md:text-6xl font-bold text-[#002366]">Como Funciona</h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+          {HOW_IT_WORKS_STEPS.map((step, idx) => (
+            <div key={idx} className="bg-white p-8 rounded-3xl shadow-lg border border-slate-100 flex flex-col items-center text-center group hover:-translate-y-2 transition-all duration-300">
+              <div className="w-20 h-20 rounded-2xl bg-blue-50 text-[#002366] flex items-center justify-center mb-6 group-hover:bg-[#002366] group-hover:text-white transition-colors">
+                {step.icon}
+              </div>
+              <h4 className="text-2xl font-bold text-[#002366] mb-4">{step.title}</h4>
+              <p className="text-slate-600 leading-relaxed">{step.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Plans = () => {
+  const plans = [
+    {
+      title: "Ciclo de Lavagem",
+      description: "Lave tudo o que couber no cesto medidor (aprox. 10kg). Sabão e amaciante inclusos.",
+      price: "13",
+      cents: "90",
+      unit: "cesto",
+      icon: <Droplets size={44} className="text-[#002366]" />,
+      buttonText: "Lavar Agora",
+      variant: "navy" as const
+    },
+    {
+      title: "Ciclo de Secagem",
+      description: "Roupas secas e prontas para usar em 45 minutos. Ideal para edredons e toalhas.",
+      price: "13",
+      cents: "90",
+      unit: "ciclo",
+      icon: <Wind size={44} className="text-[#002366]" />,
+      buttonText: "Secar Agora",
+      variant: "navy" as const
+    }
+  ];
+
+  return (
+    <section id="plans" className="py-24 bg-white">
+      <div className="container mx-auto px-4 max-w-5xl">
+        <div className="text-center mb-16">
+          <h2 className="text-5xl md:text-6xl font-bold text-[#002366] mb-4">Preços Justos</h2>
+          <p className="text-slate-500 text-xl">Economia real para o seu dia a dia. Tudo o que couber no cesto!</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {plans.map((plan, idx) => (
+            <div key={idx} className="relative bg-slate-50 rounded-[40px] p-10 shadow-xl border border-slate-100 flex flex-col items-center text-center">
+              <div className="mb-6">
+                {plan.icon}
+              </div>
+              
+              <h3 className="text-2xl font-bold text-[#002366] mb-4">{plan.title}</h3>
+              <p className="text-slate-500 text-sm leading-relaxed mb-8 max-w-[280px]">
+                {plan.description}
+              </p>
+
+              <div className="flex items-start text-[#002366] mb-10">
+                <span className="text-lg font-bold mt-2 mr-1">R$</span>
+                <span className="text-7xl font-bold leading-none">{plan.price}</span>
+                <div className="flex flex-col items-start ml-1">
+                  <span className="text-3xl font-bold border-b-2 border-[#32CD32] leading-none mb-1">,{plan.cents}</span>
+                  <span className="text-xs font-medium text-slate-400">/ {plan.unit}</span>
+                </div>
+              </div>
+
+              <Button 
+                variant="navy" 
+                className="w-full py-4 text-base bg-[#002366]"
+                href={WHATSAPP_LINK}
+              >
+                {plan.buttonText}
+              </Button>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Instagram = () => {
+  return (
+    <section className="py-24 bg-white">
+      <div className="container mx-auto px-4 text-center">
+        <h2 className="text-4xl md:text-6xl font-bold text-[#002366] mb-4">Siga nosso Instagram</h2>
+        <p className="text-slate-500 text-lg md:text-xl max-w-3xl mx-auto mb-10 leading-relaxed">
+          Acompanhe nossas novidades, promoções e dicas de lavagem em tempo real!
+        </p>
+        <Button 
+          variant="navy" 
+          className="rounded-xl px-10 py-4 mb-20 bg-[#002366]"
+          href={INSTAGRAM_LINK}
+        >
+          <InstagramIcon size={20} className="mr-2" /> @lavpaylavanderia
+        </Button>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          {INSTAGRAM_POSTS.map((post, idx) => (
+            <div 
+              key={idx} 
+              className="relative aspect-[9/16] rounded-3xl overflow-hidden shadow-2xl group border-4 border-white"
+            >
+              {post.type === 'video' ? (
+                <VideoPlayer 
+                  src={post.url} 
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <img 
+                  src={post.url} 
+                  alt={`Instagram Post ${idx + 1}`} 
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  referrerPolicy="no-referrer"
+                />
+              )}
+              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                <InstagramIcon size={32} className="text-white" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Differentials = () => {
+  return (
+    <section id="differentials" className="py-24 bg-white">
+      <div className="container mx-auto px-4 text-center mb-16">
+        <h2 className="text-4xl md:text-6xl font-bold text-[#002366] mb-4 tracking-tight">Diferenciais LavPay</h2>
+        <p className="text-slate-500 text-xl">Conforto e tecnologia para você e suas roupas.</p>
+      </div>
+      <div className="container mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl">
+        {DIFFERENTIALS.map((item, idx) => (
+          <div 
+            key={idx} 
+            className="p-10 rounded-[20px] bg-[#002366] text-white flex flex-col items-center text-center shadow-2xl transition-transform hover:-translate-y-2 duration-300"
+          >
+            <div className="mb-6 text-[#32CD32]">
+              {item.icon}
+            </div>
+            <h4 className="text-xl font-bold mb-4 leading-snug">{item.title}</h4>
+            <p className="text-slate-300 text-sm leading-relaxed">{item.description}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+const Testimonials = () => {
+  return (
+    <section className="py-24 bg-[#f8fafc]">
+      <div className="container mx-auto px-4 text-center mb-12">
+        <h2 className="text-4xl md:text-6xl font-bold text-[#002366] mb-4">O que nossos clientes dizem</h2>
+        <p className="text-slate-500 text-lg md:text-xl max-w-3xl mx-auto mb-10">
+          Nota 5.0 no Google! Veja por que a LavPay é a lavanderia preferida de Porto Velho.
+        </p>
+        <Button 
+          variant="navy" 
+          className="rounded-xl px-10 py-4 mb-20 bg-[#002366]"
+          href={GOOGLE_REVIEWS_LINK}
+        >
+          Deixe sua Avaliação
+        </Button>
+      </div>
+
+      <div className="container mx-auto px-4 max-w-7xl">
+        <div className="flex gap-8 overflow-x-auto pb-12 snap-x snap-mandatory no-scrollbar">
+          {TESTIMONIALS.map((item) => (
+            <div 
+              key={item.id} 
+              className="min-w-[300px] md:min-w-[400px] bg-white p-10 rounded-[20px] shadow-xl border border-slate-100 flex flex-col h-full snap-center"
+            >
+              <div className="flex gap-1 mb-6">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={18} className="fill-yellow-400 text-yellow-400" />
+                ))}
+              </div>
+              <div className="flex-grow border-l-2 border-[#32CD32] pl-6 mb-10">
+                <p className="text-slate-600 italic text-lg leading-relaxed">
+                  "{item.comment}"
+                </p>
+              </div>
+              <div className="flex items-center gap-4 mt-auto">
+                <div className="w-12 h-12 bg-[#002366] rounded-full flex items-center justify-center text-white font-bold text-sm">
+                  {item.avatar}
+                </div>
+                <span className="font-bold text-[#002366]">{item.name}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const FAQ = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  return (
+    <section className="py-24 bg-white">
+      <div className="container mx-auto px-4 max-w-4xl">
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-blue-50 text-[#002366] mb-4">
+            <HelpCircle size={30} />
+          </div>
+          <h2 className="text-4xl md:text-6xl font-bold text-[#002366] mb-4">Perguntas Frequentes</h2>
+          <p className="text-slate-500 text-xl font-medium">Tire suas dúvidas sobre a LavPay.</p>
+        </div>
+        <div className="divide-y divide-slate-100 border-t border-slate-100">
+          {FAQ_ITEMS.map((item, idx) => (
+            <div key={idx} className="overflow-hidden">
+              <button 
+                className="w-full py-6 flex items-center justify-between text-left group transition-all" 
+                onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
+              >
+                <span className={`text-lg font-bold transition-colors ${openIndex === idx ? 'text-[#32CD32]' : 'text-slate-800'}`}>
+                  {item.question}
+                </span>
+                <ChevronDown className={`text-slate-400 transition-transform duration-300 ${openIndex === idx ? 'rotate-180 text-[#32CD32]' : ''}`} size={20} />
+              </button>
+              <div className={`transition-all duration-300 ease-in-out ${openIndex === idx ? 'max-h-[500px] opacity-100 pb-8' : 'max-h-0 opacity-0 overflow-hidden'}`}>
+                <p className="text-slate-500 text-lg leading-relaxed">
+                  {item.answer}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const AboutUs = () => {
+  return (
+    <section id="sobre" className="py-24 bg-white overflow-hidden">
+      <div className="container mx-auto px-6">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <motion.div 
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="relative"
+          >
+            <div className="absolute -top-10 -left-10 w-40 h-40 bg-[#32CD32]/10 rounded-full blur-3xl" />
+            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-[#002366]/10 rounded-full blur-3xl" />
+            
+            <div className="relative rounded-[40px] overflow-hidden shadow-2xl z-10 group">
+              <img 
+                src="https://skzfezsseuyqgzbdapng.supabase.co/storage/v1/object/public/meeeeee/Captura%20de%20tela%202026-03-18%20123142.png" 
+                alt="Um Ano de Transformação" 
+                className="w-full h-full object-cover aspect-square transition-transform duration-700 group-hover:scale-105"
+                referrerPolicy="no-referrer"
+              />
+              
+              {/* Shine Effect */}
+              <motion.div
+                animate={{
+                  x: ['-100%', '200%'],
+                }}
+                transition={{
+                  duration: 2.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  repeatDelay: 1.5
+                }}
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-20 z-20 pointer-events-none"
+              />
+              
+              {/* Sparkle effects */}
+              <motion.div 
+                animate={{ opacity: [0, 1, 0], scale: [0.5, 1.2, 0.5] }}
+                transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                className="absolute top-10 left-10 text-yellow-300 z-30"
+              >
+                <Sparkles size={32} />
+              </motion.div>
+              <motion.div 
+                animate={{ opacity: [0, 1, 0], scale: [0.5, 1.5, 0.5] }}
+                transition={{ duration: 3, repeat: Infinity, delay: 1.5 }}
+                className="absolute bottom-20 right-10 text-white z-30"
+              >
+                <Sparkles size={24} />
+              </motion.div>
+            </div>
+
+            <motion.div 
+              initial={{ scale: 0 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5, type: "spring", stiffness: 260, damping: 20 }}
+              className="absolute -bottom-6 -left-6 bg-[#32CD32] text-[#002366] p-8 rounded-3xl shadow-xl z-20 hidden md:block"
+            >
+              <p className="text-4xl font-bold">1 Ano</p>
+              <p className="text-sm font-semibold uppercase tracking-wider">No Mercado</p>
+            </motion.div>
+          </motion.div>
+          
+          <motion.div 
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="space-y-8"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#002366]/5 text-[#002366] font-semibold text-sm">
+              <span className="w-2 h-2 rounded-full bg-[#32CD32]" />
+              Nossa História
+            </div>
+            
+            <h2 className="text-4xl md:text-5xl font-bold text-[#002366] leading-tight">
+              Um ano transformando a rotina de Porto Velho
+            </h2>
+            
+            <div className="space-y-6 text-gray-600 text-lg leading-relaxed">
+              <p>
+                A LavPay nasceu de um sonho: trazer para Porto Velho a modernidade e a praticidade das lavanderias de autoatendimento que são sucesso no mundo todo.
+              </p>
+              <p>
+                Neste primeiro ano de história, celebramos não apenas o crescimento da nossa marca, mas cada minuto de tempo livre que devolvemos aos nossos clientes. Acreditamos que lavar roupa não deve ser um peso, mas um processo rápido, eficiente e até prazeroso.
+              </p>
+              <p>
+                Com tecnologia de ponta e um ambiente acolhedor, nos tornamos referência em cuidado têxtil na região, sempre focados em inovação e na satisfação total de quem confia suas roupas a nós.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-6 pt-4">
+              <div className="p-6 rounded-2xl bg-gray-50 border border-gray-100">
+                <p className="text-3xl font-bold text-[#002366] mb-1">+5.000</p>
+                <p className="text-sm text-gray-500 font-medium">Ciclos Realizados</p>
+              </div>
+              <div className="p-6 rounded-2xl bg-gray-50 border border-gray-100">
+                <p className="text-3xl font-bold text-[#002366] mb-1">100%</p>
+                <p className="text-sm text-gray-500 font-medium">Foco no Cliente</p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Fabrics = () => {
+  const fabrics = [
+    {
+      title: "Algodão e Dia a Dia",
+      description: "Camisetas, jeans e roupas íntimas. Lavagem eficiente que preserva as fibras naturais.",
+      icon: <Shirt size={24} />,
+      tips: "Ideal para o ciclo padrão de 35 minutos."
+    },
+    {
+      title: "Sintéticos e Esportivos",
+      description: "Roupas de academia e tecidos tecnológicos. Secagem rápida e remoção de odores.",
+      icon: <Zap size={24} />,
+      tips: "Use temperatura média na secagem para maior durabilidade."
+    },
+    {
+      title: "Cama e Banho",
+      description: "Lençóis, toalhas e edredons. Higienização profunda para o seu conforto.",
+      icon: <Wind size={24} />,
+      tips: "Nossas máquinas suportam edredons de casal com facilidade."
+    },
+    {
+      title: "Tecidos Delicados",
+      description: "Lãs, sedas e roupas com detalhes. Cuidado extra para peças especiais.",
+      icon: <Sparkles size={24} />,
+      tips: "Recomendamos o uso de sacos protetores para maior segurança."
+    }
+  ];
+
+  return (
+    <section className="py-24 bg-gray-50">
+      <div className="container mx-auto px-6">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#002366] mb-6">
+            Cuidado Especial para Cada Tipo de Tecido
+          </h2>
+          <p className="text-gray-600 text-lg">
+            Nossas máquinas são programadas para oferecer o melhor tratamento para suas roupas, garantindo limpeza profunda sem danificar as peças.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {fabrics.map((fabric, index) => (
+            <div key={index} className="bg-white p-8 rounded-[32px] shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group">
+              <div className="w-14 h-14 rounded-2xl bg-[#002366]/5 text-[#002366] flex items-center justify-center mb-6 group-hover:bg-[#32CD32] group-hover:text-[#002366] transition-colors">
+                {fabric.icon}
+              </div>
+              <h3 className="text-xl font-bold text-[#002366] mb-4">{fabric.title}</h3>
+              <p className="text-gray-600 mb-6 text-sm leading-relaxed">
+                {fabric.description}
+              </p>
+              <div className="pt-4 border-t border-gray-50">
+                <p className="text-[10px] uppercase tracking-widest font-bold text-[#32CD32] mb-2">Dica LavPay</p>
+                <p className="text-xs text-gray-500 italic">{fabric.tips}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-16 flex flex-wrap justify-center gap-4">
+          <Button variant="outline" className="rounded-full px-6 border-[#002366]/20 text-[#002366] hover:bg-[#002366] hover:text-white">
+            Guia de Lavagem
+          </Button>
+          <Button variant="outline" className="rounded-full px-6 border-[#002366]/20 text-[#002366] hover:bg-[#002366] hover:text-white">
+            Dicas de Secagem
+          </Button>
+          <Button variant="outline" className="rounded-full px-6 border-[#002366]/20 text-[#002366] hover:bg-[#002366] hover:text-white">
+            Produtos Recomendados
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const History = () => {
+  return (
+    <section id="history" className="py-24 bg-[#002366] text-white overflow-hidden">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <h3 className="text-[#32CD32] font-bold text-2xl mb-4">Nossa História</h3>
+            <h2 className="text-4xl md:text-6xl font-bold mb-8 leading-tight">
+              A Evolução da Lavagem em <span className="text-[#32CD32]">Rondônia</span>
+            </h2>
+            <div className="space-y-6 text-slate-300 text-lg leading-relaxed">
+              <p>
+                A história da lavagem de roupas em Rondônia reflete a própria ocupação do estado. No início, as margens do Rio Madeira eram o principal ponto de encontro das lavadeiras, que utilizavam técnicas ancestrais e a força das águas para cuidar das vestimentas dos pioneiros.
+              </p>
+              <p>
+                Com o crescimento de Porto Velho e a modernização da cidade, as lavanderias evoluíram de processos manuais para industriais. Hoje, a <strong>LavPay</strong> representa o ápice dessa evolução, trazendo o conceito de autoatendimento (self-service) que une tecnologia de ponta com a praticidade que o morador moderno de Rondônia exige.
+              </p>
+              <p>
+                Nossa missão é honrar essa história de cuidado, oferecendo um serviço que libera o seu tempo para o que realmente importa, mantendo a tradição de roupas sempre limpas e cheirosas.
+              </p>
+            </div>
+            <Button 
+              variant="outline" 
+              className="mt-10 border-[#32CD32] text-[#32CD32] hover:bg-[#32CD32] hover:text-[#002366] rounded-xl px-8 py-4"
+              href={HISTORY_STUDY_LINK}
+            >
+              Visitar Estudo Histórico <ChevronRight size={20} />
+            </Button>
+          </div>
+          <div className="relative">
+            <div className="rounded-[40px] overflow-hidden shadow-2xl border-8 border-white/10 aspect-video lg:aspect-square">
+              <img 
+                src="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?auto=format&fit=crop&q=80&w=800" 
+                alt="História da Lavagem" 
+                className="w-full h-full object-cover opacity-80"
+              />
+            </div>
+            {/* Overlay Badge */}
+            <div className="absolute -bottom-6 -left-6 bg-[#32CD32] text-[#002366] p-8 rounded-3xl shadow-2xl">
+              <span className="text-4xl font-black block">PVH</span>
+              <span className="font-bold uppercase tracking-widest text-sm">Porto Velho - RO</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Contact = () => {
+  return (
+    <section id="contact" className="py-24 bg-white">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <h3 className="text-[#32CD32] font-bold text-2xl mb-2">Onde Estamos</h3>
+            <h2 className="text-4xl md:text-6xl font-bold text-[#002366] mb-8 tracking-tight">Visite a LavPay</h2>
+            
+            <div className="space-y-8 mb-12">
+              <div className="flex items-start gap-5">
+                <div className="p-4 bg-blue-50 rounded-2xl text-[#002366]"><MapPin size={28} /></div>
+                <div>
+                  <h4 className="font-bold text-xl text-slate-900">Endereço</h4>
+                  <p className="text-slate-600 text-lg">Rua Abunã, 2378 - São Cristóvão, Porto Velho - RO, 76804-086</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-5">
+                <div className="p-4 bg-blue-50 rounded-2xl text-[#002366]"><ClockIcon size={28} /></div>
+                <div>
+                  <h4 className="font-bold text-xl text-slate-900">Horário de Funcionamento</h4>
+                  <p className="text-slate-600 text-lg">Todos os dias: 06h às 23h</p>
+                  <p className="text-sm text-[#32CD32] font-bold mt-1">Aberto aos Domingos e Feriados!</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-5">
+                <div className="p-4 bg-blue-50 rounded-2xl text-[#002366]"><Phone size={28} /></div>
+                <div>
+                  <h4 className="font-bold text-xl text-slate-900">Telefone / WhatsApp</h4>
+                  <p className="text-slate-600 text-lg">(69) 99313-2828</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-4">
+              <Button variant="navy" className="rounded-xl px-8 py-4 bg-[#002366]" href={WHATSAPP_LINK}>
+                Falar no WhatsApp
+              </Button>
+              <Button variant="outline" className="rounded-xl px-8 py-4 border-[#002366] text-[#002366]" href={GOOGLE_REVIEWS_LINK}>
+                Ver Avaliações
+              </Button>
+            </div>
+          </div>
+          
+          <div className="h-[500px] rounded-[40px] overflow-hidden shadow-2xl border-8 border-slate-50">
+            <iframe 
+              src={GOOGLE_MAPS_EMBED} 
+              width="100%" 
+              height="100%" 
+              style={{ border: 0 }} 
+              allowFullScreen 
+              loading="lazy"
+              title="Localização LavPay Porto Velho"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Footer = () => {
+  return (
+    <footer className="bg-[#002366] text-white pt-20 pb-10">
+      <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12 mb-16 text-center md:text-left">
+        <div className="max-w-xs mx-auto md:mx-0">
+          <div className="flex items-center gap-3 mb-6 justify-center md:justify-start">
+            <video 
+              src={LOGO_VIDEO} 
+              autoPlay 
+              muted 
+              loop 
+              playsInline 
+              className="w-12 h-12 rounded-full object-cover shadow-sm"
+            />
+            <h2 className="text-4xl font-bold text-white">{BRAND_NAME}</h2>
+          </div>
+          <p className="text-slate-300">A lavanderia que facilita sua rotina em Porto Velho. Tecnologia e cuidado para suas roupas.</p>
+        </div>
+        <div className="flex flex-col gap-4">
+          <h4 className="text-lg font-bold text-[#32CD32]">Navegação</h4>
+          <ul className="space-y-2">
+            {NAV_ITEMS.map((item) => (
+              <li key={item.href}><a href={item.href} className="text-slate-300 hover:text-[#32CD32] transition-colors">{item.label}</a></li>
+            ))}
+          </ul>
+        </div>
+        <div className="flex flex-col gap-4">
+          <h4 className="text-lg font-bold text-[#32CD32]">Contato</h4>
+          <ul className="space-y-2 text-slate-300">
+            <li>Rua Abunã, 2378</li>
+            <li>São Cristóvão, Porto Velho - RO</li>
+            <li>(69) 99313-2828</li>
+          </ul>
+        </div>
+        <div className="flex flex-col gap-4">
+          <h4 className="text-lg font-bold text-[#32CD32]">Redes Sociais</h4>
+          <div className="flex gap-4 justify-center md:justify-start">
+            <a href={INSTAGRAM_LINK} target="_blank" rel="noopener noreferrer" className="p-3 bg-white/10 rounded-full hover:bg-[#32CD32] hover:text-[#002366] transition-all"><InstagramIcon size={20} /></a>
+          </div>
+        </div>
+      </div>
+      <div className="container mx-auto px-4 pt-10 border-t border-white/10 text-center text-slate-400 text-sm">
+        <p>&copy; {new Date().getFullYear()} {BRAND_NAME} Lavanderia Autoatendimento. Todos os direitos reservados.</p>
+      </div>
+    </footer>
+  );
+};
+
+const WhatsAppWidget = () => {
+  return (
+    <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl">
+      <MessageCircle size={32} />
+    </a>
+  );
+};
+
+export default function App() {
+  return (
+    <div className="antialiased overflow-x-hidden">
+      <Header />
+      <Hero />
+      <AboutUs />
+      <HowItWorks />
+      <Fabrics />
+      <Plans />
+      <Differentials />
+      <Instagram />
+      <Testimonials />
+      <FAQ />
+      <Contact />
+      <History />
+      <Footer />
+      <WhatsAppWidget />
+    </div>
+  );
+}
