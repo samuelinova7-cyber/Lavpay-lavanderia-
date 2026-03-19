@@ -41,7 +41,7 @@ import {
   HISTORY_STUDY_LINK,
   BRAND_NAME,
   SLOGAN,
-  LOGO_VIDEO,
+  LOGO_IMAGE,
   HERO_VIDEO,
   HOW_IT_WORKS_STEPS,
   GOOGLE_MAPS_EMBED
@@ -64,13 +64,13 @@ const Button = ({
 }) => {
   const base = "px-6 py-3 rounded-lg font-bold transition-all duration-300 flex items-center justify-center gap-2 text-sm uppercase tracking-wider";
   const variants = {
-    primary: "bg-blue-500 text-white hover:bg-blue-600 shadow-md",
+    primary: "bg-lavpay-blue text-white hover:opacity-90 shadow-md",
     secondary: "bg-slate-100 text-slate-800 hover:bg-slate-200",
-    outline: "border-2 border-blue-500 text-blue-500 hover:bg-blue-50",
-    ghost: "text-slate-600 hover:text-blue-500 hover:bg-blue-50",
+    outline: "border-2 border-lavpay-blue text-lavpay-blue hover:bg-blue-50",
+    ghost: "text-slate-600 hover:text-lavpay-blue hover:bg-blue-50",
     accent: "bg-yellow-500 text-slate-900 hover:bg-yellow-600 shadow-md",
-    success: "bg-[#22c55e] text-white hover:bg-[#1eb054] shadow-md",
-    navy: "bg-[#2d3a82] text-white hover:bg-[#232d66] shadow-md"
+    success: "bg-lavpay-green text-lavpay-blue hover:opacity-90 shadow-md",
+    navy: "bg-lavpay-blue text-white hover:opacity-90 shadow-md"
   };
 
   const Component = href ? 'a' : 'button';
@@ -136,7 +136,7 @@ const Header = () => {
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md' : 'bg-white/80 backdrop-blur-md'}`}>
       {/* Marquee Top Bar */}
-      <div className="bg-[#002366] text-white text-sm py-2 overflow-hidden flex items-center">
+      <div className="bg-lavpay-blue text-white text-sm py-2 overflow-hidden flex items-center">
         <div className="animate-infinite-scroll flex whitespace-nowrap items-center">
           {[...Array(2)].map((_, copyIdx) => (
             <div key={copyIdx} className="flex items-center gap-8 px-4">
@@ -156,15 +156,13 @@ const Header = () => {
 
       <div className={`container mx-auto px-4 flex items-center justify-between transition-all duration-300 ${scrolled ? 'py-3' : 'py-5'}`}>
         <a href="#home" className="flex items-center gap-3">
-          <video 
-            src={LOGO_VIDEO} 
-            autoPlay 
-            muted 
-            loop 
-            playsInline 
+          <img 
+            src={LOGO_IMAGE} 
+            alt={BRAND_NAME}
             className="w-12 h-12 rounded-full object-cover shadow-sm"
+            referrerPolicy="no-referrer"
           />
-          <span className="text-3xl font-bold text-[#002366]">{BRAND_NAME}</span>
+          <span className="text-3xl font-bold font-heading text-lavpay-blue">{BRAND_NAME}</span>
         </a>
 
         {/* Desktop Nav */}
@@ -173,12 +171,12 @@ const Header = () => {
             <a 
               key={item.href} 
               href={item.href} 
-              className="font-medium text-slate-700 transition-colors hover:text-[#32CD32]"
+              className="font-medium text-slate-700 transition-colors hover:text-lavpay-blue"
             >
               {item.label}
             </a>
           ))}
-          <Button variant="navy" href={WHATSAPP_LINK} className="rounded-full bg-[#002366]">
+          <Button variant="navy" href={WHATSAPP_LINK} className="rounded-full">
             <MessageCircle size={18} /> WhatsApp
           </Button>
         </nav>
@@ -221,24 +219,24 @@ const Hero = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Text Content */}
           <div className="max-w-xl z-20">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-[#002366] text-sm font-bold mb-6 uppercase tracking-wider">
-              <span className="w-2 h-2 rounded-full bg-[#32CD32]"></span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-lavpay-blue text-sm font-bold mb-6 uppercase tracking-wider">
+              <span className="w-2 h-2 rounded-full bg-lavpay-green"></span>
               Tecnologia e Praticidade
             </div>
             
-            <h1 className="text-5xl lg:text-7xl font-extrabold text-slate-900 leading-[1.1] mb-6 tracking-tight">
-              {BRAND_NAME}: <span className="text-[#002366]">Sua vida mais leve,</span> <span className="text-[#32CD32]">suas roupas prontas num Pix.</span>
+            <h1 className="text-5xl lg:text-7xl font-extrabold font-heading text-slate-900 leading-[1.1] mb-6 tracking-tight">
+              {BRAND_NAME}: <span className="text-lavpay-blue">Velocidade e</span> <span className="text-lavpay-green">Qualidade</span>
             </h1>
             
             <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-              A lavanderia de autoatendimento que facilita sua rotina em Porto Velho. Lave e seque suas roupas com produtos profissionais inclusos e pague com facilidade.
+              {SLOGAN} em Porto Velho. Praticidade, economia de tempo e dinheiro para sua rotina agitada.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button variant="navy" className="text-lg px-8 py-4 rounded-xl shadow-lg bg-[#002366]" href={WHATSAPP_LINK}>
+              <Button variant="navy" className="text-lg px-8 py-4 rounded-xl shadow-lg" href={WHATSAPP_LINK}>
                 Falar no WhatsApp <ChevronRight size={20} />
               </Button>
-              <Button variant="outline" className="text-lg px-8 py-4 rounded-xl border-[#32CD32] text-[#32CD32] hover:bg-green-50" href="#contact">
+              <Button variant="outline" className="text-lg px-8 py-4 rounded-xl border-lavpay-green text-lavpay-blue hover:bg-green-50" href="#contact">
                 Como Chegar
               </Button>
             </div>
@@ -307,8 +305,8 @@ const Plans = () => {
     {
       title: "Ciclo de Lavagem",
       description: "Lave tudo o que couber no cesto medidor (aprox. 10kg). Sabão e amaciante inclusos.",
-      price: "13",
-      cents: "90",
+      price: "15",
+      cents: "00",
       unit: "cesto",
       icon: <Droplets size={44} className="text-[#002366]" />,
       buttonText: "Lavar Agora",
@@ -317,8 +315,8 @@ const Plans = () => {
     {
       title: "Ciclo de Secagem",
       description: "Roupas secas e prontas para usar em 45 minutos. Ideal para edredons e toalhas.",
-      price: "13",
-      cents: "90",
+      price: "15",
+      cents: "00",
       unit: "ciclo",
       icon: <Wind size={44} className="text-[#002366]" />,
       buttonText: "Secar Agora",
@@ -423,7 +421,7 @@ const Differentials = () => {
         <h2 className="text-4xl md:text-6xl font-bold text-[#002366] mb-4 tracking-tight">Diferenciais LavPay</h2>
         <p className="text-slate-500 text-xl">Conforto e tecnologia para você e suas roupas.</p>
       </div>
-      <div className="container mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl">
+      <div className="container mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl">
         {DIFFERENTIALS.map((item, idx) => (
           <div 
             key={idx} 
@@ -610,24 +608,28 @@ const AboutUs = () => {
             
             <div className="space-y-6 text-gray-600 text-lg leading-relaxed">
               <p>
-                A LavPay nasceu de um sonho: trazer para Porto Velho a modernidade e a praticidade das lavanderias de autoatendimento que são sucesso no mundo todo.
+                A LavPay Lavanderia nasceu de um sonho: trazer para Porto Velho a modernidade e a praticidade das lavanderias de autoatendimento que são sucesso no mundo todo.
               </p>
               <p>
-                Neste primeiro ano de história, celebramos não apenas o crescimento da nossa marca, mas cada minuto de tempo livre que devolvemos aos nossos clientes. Acreditamos que lavar roupa não deve ser um peso, mas um processo rápido, eficiente e até prazeroso.
+                Desde o início da nossa trajetória, celebramos não apenas o crescimento da nossa marca, mas também cada minuto de tempo livre que devolvemos aos nossos clientes. Acreditamos que lavar roupa não deve ser um peso, mas um processo rápido, eficiente e até prazeroso.
               </p>
               <p>
-                Com tecnologia de ponta e um ambiente acolhedor, nos tornamos referência em cuidado têxtil na região, sempre focados em inovação e na satisfação total de quem confia suas roupas a nós.
+                Com tecnologia de ponta e um ambiente acolhedor, a LavPay vem se consolidando como referência em cuidado têxtil na região, sempre focada em inovação e na satisfação de quem confia suas roupas a nós.
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-6 pt-4">
-              <div className="p-6 rounded-2xl bg-gray-50 border border-gray-100">
-                <p className="text-3xl font-bold text-[#002366] mb-1">+5.000</p>
-                <p className="text-sm text-gray-500 font-medium">Ciclos Realizados</p>
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
               <div className="p-6 rounded-2xl bg-gray-50 border border-gray-100">
                 <p className="text-3xl font-bold text-[#002366] mb-1">100%</p>
-                <p className="text-sm text-gray-500 font-medium">Foco no Cliente</p>
+                <p className="text-sm text-gray-500 font-medium">Autoatendimento</p>
+              </div>
+              <div className="p-6 rounded-2xl bg-gray-50 border border-gray-100">
+                <p className="text-3xl font-bold text-[#002366] mb-1">+3 ton</p>
+                <p className="text-sm text-gray-500 font-medium">Roupas Cuidadas</p>
+              </div>
+              <div className="p-6 rounded-2xl bg-gray-50 border border-gray-100">
+                <p className="text-3xl font-bold text-[#002366] mb-1">+2.000h</p>
+                <p className="text-sm text-gray-500 font-medium">Tempo Economizado</p>
               </div>
             </div>
           </motion.div>
@@ -711,55 +713,6 @@ const Fabrics = () => {
   );
 };
 
-const History = () => {
-  return (
-    <section id="history" className="py-24 bg-[#002366] text-white overflow-hidden">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <h3 className="text-[#32CD32] font-bold text-2xl mb-4">Nossa História</h3>
-            <h2 className="text-4xl md:text-6xl font-bold mb-8 leading-tight">
-              A Evolução da Lavagem em <span className="text-[#32CD32]">Rondônia</span>
-            </h2>
-            <div className="space-y-6 text-slate-300 text-lg leading-relaxed">
-              <p>
-                A história da lavagem de roupas em Rondônia reflete a própria ocupação do estado. No início, as margens do Rio Madeira eram o principal ponto de encontro das lavadeiras, que utilizavam técnicas ancestrais e a força das águas para cuidar das vestimentas dos pioneiros.
-              </p>
-              <p>
-                Com o crescimento de Porto Velho e a modernização da cidade, as lavanderias evoluíram de processos manuais para industriais. Hoje, a <strong>LavPay</strong> representa o ápice dessa evolução, trazendo o conceito de autoatendimento (self-service) que une tecnologia de ponta com a praticidade que o morador moderno de Rondônia exige.
-              </p>
-              <p>
-                Nossa missão é honrar essa história de cuidado, oferecendo um serviço que libera o seu tempo para o que realmente importa, mantendo a tradição de roupas sempre limpas e cheirosas.
-              </p>
-            </div>
-            <Button 
-              variant="outline" 
-              className="mt-10 border-[#32CD32] text-[#32CD32] hover:bg-[#32CD32] hover:text-[#002366] rounded-xl px-8 py-4"
-              href={HISTORY_STUDY_LINK}
-            >
-              Visitar Estudo Histórico <ChevronRight size={20} />
-            </Button>
-          </div>
-          <div className="relative">
-            <div className="rounded-[40px] overflow-hidden shadow-2xl border-8 border-white/10 aspect-video lg:aspect-square">
-              <img 
-                src="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?auto=format&fit=crop&q=80&w=800" 
-                alt="História da Lavagem" 
-                className="w-full h-full object-cover opacity-80"
-              />
-            </div>
-            {/* Overlay Badge */}
-            <div className="absolute -bottom-6 -left-6 bg-[#32CD32] text-[#002366] p-8 rounded-3xl shadow-2xl">
-              <span className="text-4xl font-black block">PVH</span>
-              <span className="font-bold uppercase tracking-widest text-sm">Porto Velho - RO</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
 const Contact = () => {
   return (
     <section id="contact" className="py-24 bg-white">
@@ -774,7 +727,7 @@ const Contact = () => {
                 <div className="p-4 bg-blue-50 rounded-2xl text-[#002366]"><MapPin size={28} /></div>
                 <div>
                   <h4 className="font-bold text-xl text-slate-900">Endereço</h4>
-                  <p className="text-slate-600 text-lg">Rua Abunã, 2378 - São Cristóvão, Porto Velho - RO, 76804-086</p>
+                  <p className="text-slate-600 text-lg">Rua Décima Avenida, 4272 - Sala 03 - Rio Madeira, Porto Velho - RO, 76821-340</p>
                 </div>
               </div>
               
@@ -791,7 +744,7 @@ const Contact = () => {
                 <div className="p-4 bg-blue-50 rounded-2xl text-[#002366]"><Phone size={28} /></div>
                 <div>
                   <h4 className="font-bold text-xl text-slate-900">Telefone / WhatsApp</h4>
-                  <p className="text-slate-600 text-lg">(69) 99313-2828</p>
+                  <p className="text-slate-600 text-lg">(69) 99203-5229</p>
                 </div>
               </div>
             </div>
@@ -823,44 +776,115 @@ const Contact = () => {
   );
 };
 
+const PortoVelhoHistory = () => {
+  return (
+    <section id="history" className="py-24 bg-slate-50 overflow-hidden">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="relative"
+          >
+            <div className="absolute -top-10 -left-10 w-40 h-40 bg-lavpay-green/20 rounded-full blur-3xl"></div>
+            <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-white">
+              <img 
+                src="https://images.unsplash.com/photo-1545173168-9f1947eebb7f?auto=format&fit=crop&q=80&w=1200" 
+                alt="História de Porto Velho" 
+                className="w-full h-[500px] object-cover"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-lavpay-blue/60 to-transparent"></div>
+              <div className="absolute bottom-8 left-8 right-8 text-white">
+                <p className="text-sm font-bold uppercase tracking-widest mb-2 opacity-80">Tradição & Modernidade</p>
+                <h3 className="text-3xl font-bold font-heading">Porto Velho: Do Rio Madeira ao Autoatendimento</h3>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="flex flex-col gap-8"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-lavpay-blue/5 text-lavpay-blue text-sm font-bold uppercase tracking-wider w-fit">
+              Nossa História em PVH
+            </div>
+            
+            <h2 className="text-4xl md:text-5xl font-black font-heading text-slate-900 leading-tight">
+              A Evolução de Lavar Roupa em <span className="text-lavpay-blue">Porto Velho</span>
+            </h2>
+            
+            <div className="space-y-6 text-lg text-slate-600 leading-relaxed">
+              <p>
+                Desde as margens do Rio Madeira até a modernidade da <span className="font-bold text-lavpay-blue">LAVPAY</span>, a forma como cuidamos das nossas roupas em Porto Velho mudou drasticamente. Antigamente, lavar roupa era uma tarefa árdua que consumia o dia todo, muitas vezes feita manualmente sob o sol forte da nossa capital.
+              </p>
+              <p>
+                Hoje, com a tecnologia de autoatendimento, você resolve tudo em menos de uma hora, com economia e conforto. A <span className="font-bold text-lavpay-blue">LAVPAY</span> chegou para honrar essa história de trabalho, trazendo o que há de mais moderno no mundo para facilitar a vida do povo portovelhense.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-6 pt-4">
+              <div className="p-6 bg-white rounded-2xl shadow-sm border border-slate-100">
+                <h4 className="text-3xl font-bold text-lavpay-blue mb-1">100%</h4>
+                <p className="text-sm text-slate-500 uppercase font-bold tracking-wider">Portovelhense</p>
+              </div>
+              <div className="p-6 bg-white rounded-2xl shadow-sm border border-slate-100">
+                <h4 className="text-3xl font-bold text-lavpay-green mb-1">60 min</h4>
+                <p className="text-sm text-slate-500 uppercase font-bold tracking-wider">Lave e Seque</p>
+              </div>
+            </div>
+
+            <Button variant="navy" className="w-fit rounded-xl px-10 py-5 text-lg shadow-xl" href={WHATSAPP_LINK}>
+              Conheça Nossa Unidade <ChevronRight size={20} />
+            </Button>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const Footer = () => {
   return (
     <footer className="bg-[#002366] text-white pt-20 pb-10">
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12 mb-16 text-center md:text-left">
         <div className="max-w-xs mx-auto md:mx-0">
           <div className="flex items-center gap-3 mb-6 justify-center md:justify-start">
-            <video 
-              src={LOGO_VIDEO} 
-              autoPlay 
-              muted 
-              loop 
-              playsInline 
+            <img 
+              src={LOGO_IMAGE} 
+              alt={BRAND_NAME}
               className="w-12 h-12 rounded-full object-cover shadow-sm"
+              referrerPolicy="no-referrer"
             />
-            <h2 className="text-4xl font-bold text-white">{BRAND_NAME}</h2>
+            <h2 className="text-4xl font-bold font-heading text-white">{BRAND_NAME}</h2>
           </div>
           <p className="text-slate-300">A lavanderia que facilita sua rotina em Porto Velho. Tecnologia e cuidado para suas roupas.</p>
         </div>
         <div className="flex flex-col gap-4">
-          <h4 className="text-lg font-bold text-[#32CD32]">Navegação</h4>
+          <h4 className="text-lg font-bold font-heading text-lavpay-green">Navegação</h4>
           <ul className="space-y-2">
             {NAV_ITEMS.map((item) => (
-              <li key={item.href}><a href={item.href} className="text-slate-300 hover:text-[#32CD32] transition-colors">{item.label}</a></li>
+              <li key={item.href}><a href={item.href} className="text-slate-300 hover:text-lavpay-green transition-colors">{item.label}</a></li>
             ))}
           </ul>
         </div>
         <div className="flex flex-col gap-4">
-          <h4 className="text-lg font-bold text-[#32CD32]">Contato</h4>
+          <h4 className="text-lg font-bold font-heading text-lavpay-green">Contato</h4>
           <ul className="space-y-2 text-slate-300">
-            <li>Rua Abunã, 2378</li>
-            <li>São Cristóvão, Porto Velho - RO</li>
-            <li>(69) 99313-2828</li>
+            <li>Rua Décima Avenida, 4272 - Sala 03</li>
+            <li>Rio Madeira, Porto Velho - RO</li>
+            <li>(69) 99203-5229</li>
           </ul>
         </div>
         <div className="flex flex-col gap-4">
-          <h4 className="text-lg font-bold text-[#32CD32]">Redes Sociais</h4>
+          <h4 className="text-lg font-bold font-heading text-lavpay-green">Redes Sociais</h4>
           <div className="flex gap-4 justify-center md:justify-start">
-            <a href={INSTAGRAM_LINK} target="_blank" rel="noopener noreferrer" className="p-3 bg-white/10 rounded-full hover:bg-[#32CD32] hover:text-[#002366] transition-all"><InstagramIcon size={20} /></a>
+            <a href={INSTAGRAM_LINK} target="_blank" rel="noopener noreferrer" className="p-3 bg-white/10 rounded-full hover:bg-lavpay-green hover:text-lavpay-blue transition-all"><InstagramIcon size={20} /></a>
           </div>
         </div>
       </div>
@@ -881,7 +905,7 @@ const WhatsAppWidget = () => {
 
 export default function App() {
   return (
-    <div className="antialiased overflow-x-hidden">
+    <div className="antialiased overflow-x-hidden font-body selection:bg-lavpay-blue selection:text-white">
       <Header />
       <Hero />
       <AboutUs />
@@ -893,7 +917,7 @@ export default function App() {
       <Testimonials />
       <FAQ />
       <Contact />
-      <History />
+      <PortoVelhoHistory />
       <Footer />
       <WhatsAppWidget />
     </div>
