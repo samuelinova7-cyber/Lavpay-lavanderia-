@@ -54,13 +54,15 @@ const Button = ({
   variant = 'primary', 
   className = '', 
   onClick,
-  href 
+  href,
+  target
 }: { 
   children?: React.ReactNode; 
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'accent' | 'success' | 'navy'; 
   className?: string;
   onClick?: () => void;
   href?: string;
+  target?: string;
 }) => {
   const base = "px-6 py-3 rounded-lg font-bold transition-all duration-300 flex items-center justify-center gap-2 text-sm uppercase tracking-wider";
   const variants = {
@@ -79,6 +81,8 @@ const Button = ({
     <Component 
       href={href}
       onClick={onClick} 
+      target={target}
+      rel={target === '_blank' ? 'noopener noreferrer' : undefined}
       className={`${base} ${variants[variant]} ${className}`}
     >
       {children}
@@ -778,7 +782,7 @@ const Contact = () => {
 
 const PortoVelhoHistory = () => {
   return (
-    <section id="history" className="py-24 bg-slate-50 overflow-hidden">
+    <section id="history" className="py-24 bg-blue-50 overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div 
@@ -821,10 +825,13 @@ const PortoVelhoHistory = () => {
             
             <div className="space-y-6 text-lg text-slate-600 leading-relaxed">
               <p>
-                Desde as margens do Rio Madeira até a modernidade da <span className="font-bold text-lavpay-blue">LAVPAY</span>, a forma como cuidamos das nossas roupas em Porto Velho mudou drasticamente. Antigamente, lavar roupa era uma tarefa árdua que consumia o dia todo, muitas vezes feita manualmente sob o sol forte da nossa capital.
+                Desde os tempos mais remotos, a lavagem de roupas foi uma atividade essencial na vida das comunidades. Em Porto Velho, Rondônia, essa prática encontra um novo protagonismo com a <span className="font-bold text-lavpay-blue">Lavanderia LAVPAY</span>.
               </p>
               <p>
-                Hoje, com a tecnologia de autoatendimento, você resolve tudo em menos de uma hora, com economia e conforto. A <span className="font-bold text-lavpay-blue">LAVPAY</span> chegou para honrar essa história de trabalho, trazendo o que há de mais moderno no mundo para facilitar a vida do povo portovelhense.
+                Localizada na capital, a <span className="font-bold text-lavpay-blue">LAVPAY</span> combina a tradição das lavagens cuidadosas com a modernidade dos serviços automatizados. Inspirada pela proximidade do Rio Madeira, que foi palco das lavagens tradicionais, a <span className="font-bold text-lavpay-blue">LAVPAY</span> se destaca hoje como uma referência na cidade, oferecendo agilidade, praticidade e um cuidado especial com cada peça.
+              </p>
+              <p>
+                Assim, a <span className="font-bold text-lavpay-blue">LAVPAY</span> não é apenas um serviço, mas um elo entre o passado, representado pelo Rio Madeira, e o futuro do cuidado com as roupas na capital rondoniense.
               </p>
             </div>
 
@@ -839,8 +846,8 @@ const PortoVelhoHistory = () => {
               </div>
             </div>
 
-            <Button variant="navy" className="w-fit rounded-xl px-10 py-5 text-lg shadow-xl" href={WHATSAPP_LINK}>
-              Conheça Nossa Unidade <ChevronRight size={20} />
+            <Button variant="navy" className="w-fit rounded-xl px-10 py-5 text-lg shadow-xl" href={HISTORY_STUDY_LINK} target="_blank">
+              Conheça o estudo histórico <ChevronRight size={20} />
             </Button>
           </motion.div>
         </div>
@@ -851,7 +858,7 @@ const PortoVelhoHistory = () => {
 
 const Footer = () => {
   return (
-    <footer className="bg-[#002366] text-white pt-20 pb-10">
+    <footer className="bg-lavpay-blue text-white pt-20 pb-10">
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12 mb-16 text-center md:text-left">
         <div className="max-w-xs mx-auto md:mx-0">
           <div className="flex items-center gap-3 mb-6 justify-center md:justify-start">
