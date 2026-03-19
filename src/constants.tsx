@@ -19,13 +19,15 @@ import {
 export const BRAND_NAME = "LAVPAY";
 export const SLOGAN = "Lavanderia Self-Service";
 export const WHATSAPP_LINK = "https://wa.me/5569992035229?text=Olá! Quero saber mais sobre a lavagem de roupas na LavPay.";
-export const GOOGLE_REVIEWS_LINK = "https://www.google.com/maps/place/Lav+Pay+-+Lavanderia+Autoatendimento/@-8.7423985,-63.8732947,17z/data=!4m8!3m7!1s0x923259683448f415:0x86094727188293d2!8m2!3d-8.7423985!4d-63.8707198!9m1!1b1!16s%2Fg%2F11v0_v_v_v?entry=ttu";
+export const GOOGLE_REVIEWS_LINK = "https://g.page/r/CSEM8R32uJ-hEBM/review";
 export const INSTAGRAM_LINK = "https://instagram.com/lavpaylavanderia";
 export const HISTORY_STUDY_LINK = "https://pt.wikipedia.org/wiki/História_de_Porto_Velho";
 export const GOOGLE_MAPS_EMBED = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3943.33418512215!2d-63.8732947!3d-8.7423985!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x923259683448f415%3A0x86094727188293d2!2sLav%20Pay%20-%20Lavanderia%20Autoatendimento!5e0!3m2!1spt-BR!2sbr!4v1707000000000!5m2!1spt-BR!2sbr";
+export const LOCATION_IMAGE = "https://skzfezsseuyqgzbdapng.supabase.co/storage/v1/object/public/meeeeee/WhatsApp%20Image%202026-03-19%20at%206.37.03%20PM.jpeg";
+export const GOOGLE_MAPS_DIRECT_LINK = "https://maps.app.goo.gl/86094727188293d2";
 
 export const LOGO_IMAGE = "https://skzfezsseuyqgzbdapng.supabase.co/storage/v1/object/public/meeeeee/Captura%20de%20tela%202026-03-19%20093919.png";
-export const HERO_VIDEO = "https://skzfezsseuyqgzbdapng.supabase.co/storage/v1/object/public/meeeeee/a13752e3-6d61-4166-80c0-f17b8c22bc3b.mp4";
+export const HERO_VIDEO = "https://skzfezsseuyqgzbdapng.supabase.co/storage/v1/object/public/meeeeee/SnapInsta.to_AQPBFwQa7ArpJfWR-6UgwIExkc_g9IV2gXK7JNXnI7nc2RN2lJ5ViGLMqksa24NPUQ2BU5ALlgvWQ1EstFJwVvRCVCbT8r1mh84G5jw.mp4";
 
 export const NAV_ITEMS = [
   { label: 'Início', href: '#home' },
@@ -45,18 +47,18 @@ export const DIFFERENTIALS = [
   },
   {
     icon: <Zap size={40} />,
-    title: "Economize dinheiro",
-    description: "Mais barato que lavar em casa e sem esforço."
+    title: "Tempo Recorde",
+    description: "Roupas limpas e secas em média 60 minutos."
   },
   {
     icon: <Wifi size={40} />,
-    title: "Ambiente confortável",
-    description: "Lounge climatizado, Wi-Fi e TV."
+    title: "Espaço Kids",
+    description: "Diversão para os pequenos."
   },
   {
     icon: <Star size={40} />,
-    title: "Promoções exclusivas",
-    description: "Pague menos com nossos pacotes mensais."
+    title: "Estacionamento",
+    description: "Chegue, estacione e aproveite nossos serviços com tranquilidade."
   },
   {
     icon: <Droplets size={40} />,
@@ -205,14 +207,10 @@ export const INSTAGRAM_POSTS = [
   },
   {
     type: 'video',
-    url: "https://skzfezsseuyqgzbdapng.supabase.co/storage/v1/object/public/meeeeee/SnapInsta.to_AQOM3J_UrdBl-rYFSy1Ux-2gBiWBzaBevvdxCreeBy8Nle_TpAL9VL725l9-kMtBI-U0bT0b900QNFhIbS0haNtfrJBYwAxtFBLzojM.mp4"
+    url: "https://skzfezsseuyqgzbdapng.supabase.co/storage/v1/object/public/meeeeee/SnapInsta.to_AQN3RWMUwJ33FDg_1W67Ts1WYoL3dFovGnEwaQzbiOJ11rN0R6GnL7NW7p55g4gsafGXRoFl6aSnyFfWjBDi9c1xEizWdYM3UFdNoj8.mp4"
   },
   {
     type: 'video',
-    url: "https://skzfezsseuyqgzbdapng.supabase.co/storage/v1/object/public/meeeeee/SnapInsta.to_AQO3wPr_ALkNZxigfub9rQGBNhzM7kMuoF_JK1xsSAzIH8Nfc6T_xSq83PYvyAwY66IdPvpi0N4vHtGfkMcA-tqo1iWB-_QfzL8JJmU.mp4"
-  },
-  {
-    type: 'image',
-    url: "https://skzfezsseuyqgzbdapng.supabase.co/storage/v1/object/public/meeeeee/Captura%20de%20tela%202026-03-18%20123142.png"
+    url: "https://skzfezsseuyqgzbdapng.supabase.co/storage/v1/object/public/meeeeee/SnapInsta.to_AQOM3J_UrdBl-rYFSy1Ux-2gBiWBzaBevvdxCreeBy8Nle_TpAL9VL725l9-kMtBI-U0bT0b900QNFhIbS0haNtfrJBYwAxtFBLzojM.mp4"
   }
 ];

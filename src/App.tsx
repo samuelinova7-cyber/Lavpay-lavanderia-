@@ -25,7 +25,8 @@ import {
   Zap,
   Volume2,
   VolumeX,
-  Wifi
+  Wifi,
+  ShieldCheck
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { 
@@ -44,7 +45,9 @@ import {
   LOGO_IMAGE,
   HERO_VIDEO,
   HOW_IT_WORKS_STEPS,
-  GOOGLE_MAPS_EMBED
+  GOOGLE_MAPS_EMBED,
+  LOCATION_IMAGE,
+  GOOGLE_MAPS_DIRECT_LINK
 } from './constants';
 
 // --- Utility Components ---
@@ -104,7 +107,7 @@ const VideoPlayer = ({ src, className = "", overlayClassName = "", autoPlay = tr
   };
 
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-full group/video">
       <video
         ref={videoRef}
         src={src}
@@ -112,14 +115,25 @@ const VideoPlayer = ({ src, className = "", overlayClassName = "", autoPlay = tr
         muted={isMuted}
         loop={loop}
         playsInline={playsInline}
-        className={className}
+        className={`${className} cursor-pointer`}
+        onClick={toggleMute}
       />
       <button
         onClick={toggleMute}
-        className={`absolute bottom-4 right-4 z-30 p-3 bg-black/50 hover:bg-black/70 text-white rounded-full backdrop-blur-sm transition-all shadow-lg ${overlayClassName}`}
+        className={`absolute bottom-4 right-4 z-30 p-2 md:p-3 bg-black/60 hover:bg-black/80 text-white rounded-full md:rounded-xl backdrop-blur-md transition-all duration-300 shadow-xl flex items-center gap-2 border border-white/20 ${overlayClassName}`}
         aria-label={isMuted ? "Ativar som" : "Desativar som"}
       >
-        {isMuted ? <VolumeX size={24} /> : <Volume2 size={24} />}
+        {isMuted ? (
+          <>
+            <VolumeX size={20} className="md:w-6 md:h-6" />
+            <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider pr-1">Ativar Som</span>
+          </>
+        ) : (
+          <>
+            <Volume2 size={20} className="md:w-6 md:h-6" />
+            <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider pr-1">Mudar para Mudo</span>
+          </>
+        )}
       </button>
     </div>
   );
@@ -138,9 +152,9 @@ const Header = () => {
   }, []);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md' : 'bg-white/80 backdrop-blur-md'}`}>
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-lavpay-blue shadow-md' : 'bg-lavpay-blue/90 backdrop-blur-md'}`}>
       {/* Marquee Top Bar */}
-      <div className="bg-lavpay-blue text-white text-sm py-2 overflow-hidden flex items-center">
+      <div className="bg-white/10 text-white text-sm py-2 overflow-hidden flex items-center border-b border-white/10">
         <div className="animate-infinite-scroll flex whitespace-nowrap items-center">
           {[...Array(2)].map((_, copyIdx) => (
             <div key={copyIdx} className="flex items-center gap-8 px-4">
@@ -158,15 +172,15 @@ const Header = () => {
         </div>
       </div>
 
-      <div className={`container mx-auto px-4 flex items-center justify-between transition-all duration-300 ${scrolled ? 'py-3' : 'py-5'}`}>
+      <div className={`container mx-auto px-4 flex items-center justify-between transition-all duration-300 ${scrolled ? 'py-2' : 'py-4'}`}>
         <a href="#home" className="flex items-center gap-3">
           <img 
             src={LOGO_IMAGE} 
             alt={BRAND_NAME}
-            className="w-12 h-12 rounded-full object-cover shadow-sm"
+            className={`rounded-full object-cover shadow-sm transition-all duration-300 ${scrolled ? 'w-16 h-16' : 'w-28 h-28'}`}
             referrerPolicy="no-referrer"
           />
-          <span className="text-3xl font-bold font-heading text-lavpay-blue">{BRAND_NAME}</span>
+          <span className={`font-bold font-heading text-white transition-all duration-300 ${scrolled ? 'text-2xl' : 'text-4xl'}`}>{BRAND_NAME}</span>
         </a>
 
         {/* Desktop Nav */}
@@ -175,19 +189,19 @@ const Header = () => {
             <a 
               key={item.href} 
               href={item.href} 
-              className="font-medium text-slate-700 transition-colors hover:text-lavpay-blue"
+              className="font-medium text-white transition-colors hover:text-lavpay-green"
             >
               {item.label}
             </a>
           ))}
-          <Button variant="navy" href={WHATSAPP_LINK} className="rounded-full">
+          <Button variant="success" href={WHATSAPP_LINK} className="rounded-full">
             <MessageCircle size={18} /> WhatsApp
           </Button>
         </nav>
 
         {/* Mobile Menu Toggle */}
         <button 
-          className="md:hidden p-2 rounded-lg text-slate-800"
+          className="md:hidden p-2 rounded-lg text-white"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <X size={28} /> : <Menu size={28} />}
@@ -196,18 +210,18 @@ const Header = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-xl border-t border-slate-100 p-6 flex flex-col gap-4">
+        <div className="md:hidden absolute top-full left-0 right-0 bg-lavpay-blue shadow-xl border-t border-white/10 p-6 flex flex-col gap-4">
           {NAV_ITEMS.map((item) => (
             <a 
               key={item.href} 
               href={item.href} 
-              className="text-lg font-medium text-slate-700 border-b border-slate-50 pb-2"
+              className="text-lg font-medium text-white border-b border-white/10 pb-2"
               onClick={() => setIsOpen(false)}
             >
               {item.label}
             </a>
           ))}
-          <Button variant="navy" className="w-full rounded-full bg-[#002366]" href={WHATSAPP_LINK}>
+          <Button variant="success" className="w-full rounded-full" href={WHATSAPP_LINK}>
             Fale Conosco
           </Button>
         </div>
@@ -228,12 +242,12 @@ const Hero = () => {
               Tecnologia e Praticidade
             </div>
             
-            <h1 className="text-5xl lg:text-7xl font-extrabold font-heading text-slate-900 leading-[1.1] mb-6 tracking-tight">
-              {BRAND_NAME}: <span className="text-lavpay-blue">Velocidade e</span> <span className="text-lavpay-green">Qualidade</span>
+            <h1 className="text-4xl lg:text-6xl font-extrabold font-heading text-slate-900 leading-[1.2] mb-6 tracking-tight">
+              Lavanderia Self-Service em Porto Velho – <span className="text-lavpay-blue">Rápida, Moderna</span> e com <span className="text-lavpay-green">Benefícios Exclusivos</span>
             </h1>
             
             <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-              {SLOGAN} em Porto Velho. Praticidade, economia de tempo e dinheiro para sua rotina agitada.
+              Na Lav Pay Lavanderia você lava e seca suas roupas em aproximadamente 60 minutos, com produtos profissionais inclusos.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
@@ -260,12 +274,15 @@ const Hero = () => {
               
               {/* Floating Card */}
               <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-sm p-4 rounded-2xl shadow-xl flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-[#32CD32] flex items-center justify-center text-white font-bold text-xl shrink-0">
-                  LP
-                </div>
+                <img 
+                  src={LOGO_IMAGE} 
+                  alt={BRAND_NAME}
+                  className="w-14 h-14 rounded-xl object-cover shadow-sm shrink-0"
+                  referrerPolicy="no-referrer"
+                />
                 <div>
-                  <h3 className="font-bold text-slate-900">{BRAND_NAME}</h3>
-                  <p className="text-sm text-slate-600">Sua roupa limpa em 1 hora</p>
+                  <h3 className="text-xl font-bold text-slate-900">{BRAND_NAME}</h3>
+                  <p className="text-base text-slate-600">Sua roupa limpa em 1 hora</p>
                 </div>
               </div>
             </div>
@@ -318,7 +335,7 @@ const Plans = () => {
     },
     {
       title: "Ciclo de Secagem",
-      description: "Roupas secas e prontas para usar em 45 minutos. Ideal para edredons e toalhas.",
+      description: "Roupas secas e prontas para usar em 45 minutos.",
       price: "15",
       cents: "00",
       unit: "ciclo",
@@ -336,7 +353,7 @@ const Plans = () => {
           <p className="text-slate-500 text-xl">Economia real para o seu dia a dia. Tudo o que couber no cesto!</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
           {plans.map((plan, idx) => (
             <div key={idx} className="relative bg-slate-50 rounded-[40px] p-10 shadow-xl border border-slate-100 flex flex-col items-center text-center">
               <div className="mb-6">
@@ -347,7 +364,6 @@ const Plans = () => {
               <p className="text-slate-500 text-sm leading-relaxed mb-8 max-w-[280px]">
                 {plan.description}
               </p>
-
               <div className="flex items-start text-[#002366] mb-10">
                 <span className="text-lg font-bold mt-2 mr-1">R$</span>
                 <span className="text-7xl font-bold leading-none">{plan.price}</span>
@@ -356,7 +372,6 @@ const Plans = () => {
                   <span className="text-xs font-medium text-slate-400">/ {plan.unit}</span>
                 </div>
               </div>
-
               <Button 
                 variant="navy" 
                 className="w-full py-4 text-base bg-[#002366]"
@@ -366,6 +381,48 @@ const Plans = () => {
               </Button>
             </div>
           ))}
+        </div>
+
+        {/* Usage Rules Section */}
+        <div className="bg-white rounded-[32px] p-8 md:p-12 shadow-sm border border-slate-100 max-w-4xl mx-auto">
+          <div className="flex items-center gap-4 mb-8">
+            <div className="p-3 bg-blue-50 text-lavpay-blue rounded-xl">
+              <ShieldCheck size={32} />
+            </div>
+            <h3 className="text-2xl md:text-3xl font-bold text-slate-900">Regras de Uso e Segurança</h3>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <CheckCircle2 size={20} className="text-lavpay-green shrink-0 mt-1" />
+                <p className="text-slate-600 text-sm">Respeite a capacidade indicada em cada máquina.</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <CheckCircle2 size={20} className="text-lavpay-green shrink-0 mt-1" />
+                <p className="text-slate-600 text-sm">Meça as peças sempre soltas, sem compactar no cesto e ultrapassar a borda.</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <CheckCircle2 size={20} className="text-lavpay-green shrink-0 mt-1" />
+                <p className="text-slate-600 text-sm">Respeite a ordem de chegada.</p>
+              </div>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <X size={20} className="text-red-500 shrink-0 mt-1" />
+                <p className="text-slate-600 text-sm">Proibido lavar ou secar tapetes, travesseiro, panos de chão, sapatos, roupas com graxa, areia ou excesso de pelos.</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <X size={20} className="text-red-500 shrink-0 mt-1" />
+                <p className="text-slate-600 text-sm">Proibido adicionar produtos em pó em nossos equipamentos.</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <X size={20} className="text-red-500 shrink-0 mt-1" />
+                <p className="text-slate-600 text-sm">Não adicione roupas sem centrifugar em nossas secadoras.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -587,10 +644,15 @@ const AboutUs = () => {
               whileInView={{ scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.5, type: "spring", stiffness: 260, damping: 20 }}
-              className="absolute -bottom-6 -left-6 bg-[#32CD32] text-[#002366] p-8 rounded-3xl shadow-xl z-20 hidden md:block"
+              className="absolute -bottom-6 -left-6 bg-[#32CD32] text-[#002366] p-6 rounded-3xl shadow-xl z-20 hidden md:flex flex-col items-center gap-2"
             >
-              <p className="text-4xl font-bold">1 Ano</p>
-              <p className="text-sm font-semibold uppercase tracking-wider">No Mercado</p>
+              <div className="text-center">
+                <p className="text-3xl font-bold">1 Ano</p>
+                <p className="text-[10px] font-semibold uppercase tracking-wider">No Mercado</p>
+              </div>
+              <Button variant="navy" className="text-[10px] py-1 px-3 rounded-full h-auto min-h-0" href="#contact">
+                COMO CHEGAR
+              </Button>
             </motion.div>
           </motion.div>
           
@@ -607,7 +669,7 @@ const AboutUs = () => {
             </div>
             
             <h2 className="text-4xl md:text-5xl font-bold text-[#002366] leading-tight">
-              Um ano transformando a rotina de Porto Velho
+              A forma mais prática de lavar roupas em Porto Velho.
             </h2>
             
             <div className="space-y-6 text-gray-600 text-lg leading-relaxed">
@@ -763,16 +825,53 @@ const Contact = () => {
             </div>
           </div>
           
-          <div className="h-[500px] rounded-[40px] overflow-hidden shadow-2xl border-8 border-slate-50">
-            <iframe 
-              src={GOOGLE_MAPS_EMBED} 
-              width="100%" 
-              height="100%" 
-              style={{ border: 0 }} 
-              allowFullScreen 
-              loading="lazy"
-              title="Localização LavPay Porto Velho"
-            ></iframe>
+          <div className="h-[500px] rounded-[40px] overflow-hidden shadow-2xl border-8 border-slate-50 relative group">
+            <a 
+              href={GOOGLE_MAPS_DIRECT_LINK} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="block w-full h-full relative overflow-hidden"
+            >
+              <motion.div 
+                className="w-full h-full"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.6, ease: [0.33, 1, 0.68, 1] }}
+              >
+                <img 
+                  src={LOCATION_IMAGE} 
+                  alt="Localização LavPay Porto Velho" 
+                  className="w-full h-full object-cover"
+                  referrerPolicy="no-referrer"
+                />
+                
+                {/* Animated Shine Effect */}
+                <motion.div 
+                  className="absolute inset-0 z-10"
+                  initial={{ x: '-150%', skewX: -25 }}
+                  animate={{ x: '250%', skewX: -25 }}
+                  transition={{ 
+                    repeat: Infinity, 
+                    duration: 3, 
+                    ease: "easeInOut",
+                    repeatDelay: 2
+                  }}
+                  style={{
+                    background: 'linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent)'
+                  }}
+                />
+
+                {/* Reflection Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20" />
+                
+                {/* Hover Label */}
+                <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-30">
+                  <div className="bg-white/90 backdrop-blur-sm text-[#002366] px-6 py-3 rounded-full font-bold shadow-lg flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    <MapPin size={20} />
+                    Abrir no Google Maps
+                  </div>
+                </div>
+              </motion.div>
+            </a>
           </div>
         </div>
       </div>
@@ -861,11 +960,11 @@ const Footer = () => {
     <footer className="bg-lavpay-blue text-white pt-20 pb-10">
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12 mb-16 text-center md:text-left">
         <div className="max-w-xs mx-auto md:mx-0">
-          <div className="flex items-center gap-3 mb-6 justify-center md:justify-start">
+          <div className="flex items-center gap-4 mb-6 justify-center md:justify-start">
             <img 
               src={LOGO_IMAGE} 
               alt={BRAND_NAME}
-              className="w-12 h-12 rounded-full object-cover shadow-sm"
+              className="w-32 h-32 rounded-full object-cover shadow-sm"
               referrerPolicy="no-referrer"
             />
             <h2 className="text-4xl font-bold font-heading text-white">{BRAND_NAME}</h2>
