@@ -69,6 +69,21 @@ export const DIFFERENTIALS = [
     icon: <Heart size={40} />,
     title: "Sustentabilidade",
     description: "Cuidamos do planeta com tecnologia e produtos eco-friendly."
+  },
+  {
+    icon: <Sparkles size={40} />,
+    title: "Produtos inclusos",
+    description: "Sabão OMO e amaciante Comfort profissionais em todos os ciclos."
+  },
+  {
+    icon: <ShieldCheck size={40} />,
+    title: "Ambiente Seguro",
+    description: "Monitoramento 24h para sua total tranquilidade e segurança."
+  },
+  {
+    icon: <Wifi size={40} />,
+    title: "Wi-Fi Gratuito",
+    description: "Internet de alta velocidade para você trabalhar ou relaxar."
   }
 ];
 
