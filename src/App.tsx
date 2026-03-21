@@ -328,7 +328,7 @@ const Plans = () => {
       description: "Lave tudo o que couber no cesto medidor (aprox. 10kg). Sabão e amaciante inclusos.",
       price: "15",
       cents: "00",
-      unit: "cesto",
+      unit: "ciclo",
       icon: <Droplets size={44} className="text-[#002366]" />,
       buttonText: "Lavar Agora",
       variant: "navy" as const
@@ -603,7 +603,7 @@ const AboutUs = () => {
             <div className="relative rounded-[40px] overflow-hidden shadow-2xl z-10 group">
               <img 
                 src="https://skzfezsseuyqgzbdapng.supabase.co/storage/v1/object/public/meeeeee/Captura%20de%20tela%202026-03-18%20123142.png" 
-                alt="Um Ano de Transformação" 
+                alt="LavPay Lavanderia" 
                 className="w-full h-full object-cover aspect-square transition-transform duration-700 group-hover:scale-105"
                 referrerPolicy="no-referrer"
               />
@@ -639,21 +639,6 @@ const AboutUs = () => {
               </motion.div>
             </div>
 
-            <motion.div 
-              initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5, type: "spring", stiffness: 260, damping: 20 }}
-              className="absolute -bottom-6 -left-6 bg-[#32CD32] text-[#002366] p-6 rounded-3xl shadow-xl z-20 hidden md:flex flex-col items-center gap-2"
-            >
-              <div className="text-center">
-                <p className="text-3xl font-bold">1 Ano</p>
-                <p className="text-[10px] font-semibold uppercase tracking-wider">No Mercado</p>
-              </div>
-              <Button variant="navy" className="text-[10px] py-1 px-3 rounded-full h-auto min-h-0" href="#contact">
-                COMO CHEGAR
-              </Button>
-            </motion.div>
           </motion.div>
           
           <motion.div 
@@ -756,24 +741,12 @@ const Fabrics = () => {
                 {fabric.description}
               </p>
               <div className="pt-4 border-t border-gray-50">
-                <p className="text-[10px] uppercase tracking-widest font-bold text-[#32CD32] mb-2">Dica LavPay</p>
                 <p className="text-xs text-gray-500 italic">{fabric.tips}</p>
               </div>
             </div>
           ))}
         </div>
 
-        <div className="mt-16 flex flex-wrap justify-center gap-4">
-          <Button variant="outline" className="rounded-full px-6 border-[#002366]/20 text-[#002366] hover:bg-[#002366] hover:text-white">
-            Guia de Lavagem
-          </Button>
-          <Button variant="outline" className="rounded-full px-6 border-[#002366]/20 text-[#002366] hover:bg-[#002366] hover:text-white">
-            Dicas de Secagem
-          </Button>
-          <Button variant="outline" className="rounded-full px-6 border-[#002366]/20 text-[#002366] hover:bg-[#002366] hover:text-white">
-            Produtos Recomendados
-          </Button>
-        </div>
       </div>
     </section>
   );
@@ -894,7 +867,7 @@ const PortoVelhoHistory = () => {
             <div className="absolute -top-10 -left-10 w-40 h-40 bg-lavpay-green/20 rounded-full blur-3xl"></div>
             <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-white">
               <img 
-                src="https://images.unsplash.com/photo-1545173168-9f1947eebb7f?auto=format&fit=crop&q=80&w=1200" 
+                src="https://skzfezsseuyqgzbdapng.supabase.co/storage/v1/object/public/cgi/WhatsApp%20Image%202026-03-20%20at%2010.51.20%20AM%20(1).jpeg" 
                 alt="História de Porto Velho" 
                 className="w-full h-[500px] object-cover"
                 referrerPolicy="no-referrer"

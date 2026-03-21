@@ -13,7 +13,9 @@ import {
   CreditCard,
   CheckCircle2,
   MessageCircle,
-  Star
+  Star,
+  Car,
+  Baby
 } from 'lucide-react';
 
 export const BRAND_NAME = "LAVPAY";
@@ -46,17 +48,17 @@ export const DIFFERENTIALS = [
     description: "Atendimento rápido via Whatsapp 24h."
   },
   {
-    icon: <Zap size={40} />,
+    icon: <Clock size={40} />,
     title: "Tempo Recorde",
     description: "Roupas limpas e secas em média 60 minutos."
   },
   {
-    icon: <Wifi size={40} />,
+    icon: <Baby size={40} />,
     title: "Espaço Kids",
     description: "Diversão para os pequenos."
   },
   {
-    icon: <Star size={40} />,
+    icon: <Car size={40} />,
     title: "Estacionamento",
     description: "Chegue, estacione e aproveite nossos serviços com tranquilidade."
   },
@@ -227,5 +229,9 @@ export const INSTAGRAM_POSTS = [
   {
     type: 'video',
     url: "https://skzfezsseuyqgzbdapng.supabase.co/storage/v1/object/public/meeeeee/SnapInsta.to_AQOM3J_UrdBl-rYFSy1Ux-2gBiWBzaBevvdxCreeBy8Nle_TpAL9VL725l9-kMtBI-U0bT0b900QNFhIbS0haNtfrJBYwAxtFBLzojM.mp4"
+  },
+  {
+    type: 'video',
+    url: "https://skzfezsseuyqgzbdapng.supabase.co/storage/v1/object/public/meeeeee/SnapInsta.to_AQMEfq8kQrbgNNXvtwcBVdgWzsgEG0CPj_esazz8J9XWZtk51sxJeLu7tOdYeKu5a_NWvuuDelVJunAD--H5GQuMSCTwVpAwEhJTkpA.mp4"
   }
 ];
