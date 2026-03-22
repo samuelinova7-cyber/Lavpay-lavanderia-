@@ -792,6 +792,9 @@ const Contact = () => {
               <Button variant="navy" className="rounded-xl px-8 py-4 bg-[#002366]" href={WHATSAPP_LINK}>
                 Falar no WhatsApp
               </Button>
+              <Button variant="outline" className="rounded-xl px-8 py-4 border-[#002366] text-[#002366]" href={GOOGLE_MAPS_DIRECT_LINK} target="_blank">
+                Como chegar
+              </Button>
               <Button variant="outline" className="rounded-xl px-8 py-4 border-[#002366] text-[#002366]" href={GOOGLE_REVIEWS_LINK}>
                 Ver Avaliações
               </Button>
@@ -917,10 +920,6 @@ const PortoVelhoHistory = () => {
                 <p className="text-sm text-slate-500 uppercase font-bold tracking-wider">Lave e Seque</p>
               </div>
             </div>
-
-            <Button variant="navy" className="w-fit rounded-xl px-10 py-5 text-lg shadow-xl" href={HISTORY_STUDY_LINK} target="_blank">
-              Conheça o estudo histórico <ChevronRight size={20} />
-            </Button>
           </motion.div>
         </div>
       </div>
