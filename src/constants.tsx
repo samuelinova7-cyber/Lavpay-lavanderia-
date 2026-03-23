@@ -25,7 +25,7 @@ export const GOOGLE_REVIEWS_LINK = "https://g.page/r/CSEM8R32uJ-hEBM/review";
 export const INSTAGRAM_LINK = "https://instagram.com/lavpaylavanderia";
 export const HISTORY_STUDY_LINK = "https://pt.wikipedia.org/wiki/História_de_Porto_Velho";
 export const GOOGLE_MAPS_EMBED = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3943.33418512215!2d-63.8732947!3d-8.7423985!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x923259683448f415%3A0x86094727188293d2!2sLav%20Pay%20-%20Lavanderia%20Autoatendimento!5e0!3m2!1spt-BR!2sbr!4v1707000000000!5m2!1spt-BR!2sbr";
-export const LOCATION_IMAGE = "https://skzfezsseuyqgzbdapng.supabase.co/storage/v1/object/public/meeeeee/WhatsApp%20Image%202026-03-19%20at%206.37.03%20PM.jpeg";
+export const LOCATION_IMAGE = "https://skzfezsseuyqgzbdapng.supabase.co/storage/v1/object/public/cgi/Captura%20de%20tela%202026-03-23%20134719.png";
 export const GOOGLE_MAPS_DIRECT_LINK = "https://maps.app.goo.gl/xcKpDdBvieWW1XcaA?g_st=iw";
 
 export const LOGO_IMAGE = "https://skzfezsseuyqgzbdapng.supabase.co/storage/v1/object/public/meeeeee/Captura%20de%20tela%202026-03-19%20093919.png";
